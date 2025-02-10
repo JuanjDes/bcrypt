@@ -14,8 +14,10 @@ router.get('/', (req, res) => {
         const formLogout = `
             <center>
                 <h1> Hola ${req.session.username}!</h1>
-                <a href = "/dashboard">Dashboard</a>
-                <a href = "/logout">Logout</a>
+                <a href = "/dashboard">Dashboard</a><br><br>
+                <form action = "/logout" method = "POST">
+                    <input type = "submit" value = "Cerrar sesión">
+                </form>
             </center>
         `;
         res.send(formLogout);
@@ -74,6 +76,7 @@ router.get('/dashboard', verificarToken, (req, res) => {
                 <p>Username: <strong>${user.username}</strong></p>
                 <br><br>
                 <a href="/">Home</a>
+                <br><br>
                 <form action = "/logout" method = "POST">
                     <button type = "submit">Cerrar sesión</button>
                 </form>
@@ -82,7 +85,7 @@ router.get('/dashboard', verificarToken, (req, res) => {
         
         res.send(template);
     } else {
-        res.status(401).json({ message: 'Token no válido (users.js)' });
+        res.status(401).json({ message: 'Token no válido' });
     };
 
 });
